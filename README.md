@@ -1,27 +1,39 @@
-# Rustng
+# rustng
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.2.
+This project was meant to be implementation for wasm using rust and angular
 
-## Development server
+first of we will create angular workspace using following command:
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+``ng new rustng --create-application=false``
 
-## Code scaffolding
+then create angular library in this workspace 
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+``ng generate library rustyng``
+ 
+and generate angular application
 
-## Build
+``ng generate application rustyng``
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+install wasm rust package 
 
-## Running unit tests
+``cargo install wasm-pack``
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+create rust library in the angular library directory ``src/lib``
 
-## Running end-to-end tests
+``cargo new --lib example-rust-lib --vcs none``
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+to build ``wasm`` use this command in rust lib directory:
 
-## Further help
+``wasm-pack build --target web``
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+to load the wasm to your project you need to add this snippet to ``angular.json``
+````    "example-app": {
+      "architect": {
+        "build": {
+          "options": {
+            "assets": [
+              {
+                "glob": "**/*.wasm",
+                "input": "projects/rusty-wasm/src/lib/rusty-lib/pkg"
+              }
+````

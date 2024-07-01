@@ -14,6 +14,11 @@
     "declaration": false,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
+    "paths": {
+      "rusty-wasm": [
+        "./dist/rusty-wasm"
+      ]
+    },
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",
